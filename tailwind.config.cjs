@@ -21,6 +21,9 @@ module.exports = {
       gridTemplateColumns: {
         template: "218px 1fr",
       },
+      fontFamily: {
+        main: ['"DM+Sans"', "sans-serif"],
+      },
     },
   },
   plugins: [],
