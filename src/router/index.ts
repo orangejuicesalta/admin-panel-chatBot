@@ -1,8 +1,4 @@
-import {
-  createRouter,
-  createWebHashHistory,
-  type RouteLocationNormalized,
-} from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
