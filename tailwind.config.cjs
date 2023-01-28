@@ -14,13 +14,16 @@ module.exports = {
         "gray-bg": "rgba(171, 171, 171, 0.33)",
         "secondary-blue": "#3C78FF",
         "primary-orange": "#F6B445",
+        'border-color': '#DDE2E8'
       },
       screens: {
         xxxl: "1440px",
       },
       gridTemplateColumns: {
         template: "218px 1fr",
+        "even-cols": "1fr 1fr",
       },
+
       fontFamily: {
         main: ['"DM+Sans"', "sans-serif"],
       },

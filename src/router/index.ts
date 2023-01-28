@@ -21,7 +21,41 @@ const router = createRouter({
             {
               path: "list",
               name: "chats-list",
-              components: {},
+              components: {
+                left: () => import("../views/chats/ChatsList.vue"),
+                right: () => import("../views/DummyView.vue"),
+              },
+            },
+            {
+              path: "list/:id",
+              name: "selected-chat",
+              components: {
+                left: () => import("../views/chats/ChatsList.vue"),
+                right: () => import("../views/chats/SingleChatView.vue"),
+              },
+            },
+          ],
+        },
+        {
+          path: "messages",
+          name: "direct_messages",
+          component: () => import("../views/users/UsersView.vue"),
+          children: [
+            {
+              path: "list",
+              name: "messages-list",
+              components: {
+                left: () => import("../views/users/UsersList.vue"),
+                right: () => import("../views/DummyView.vue"),
+              },
+            },
+            {
+              path: "list/:id",
+              name: "selected-message",
+              components: {
+                left: () => import("../views/users/UsersList.vue"),
+                right: () => import("../views/users/OneUserChatView.vue"),
+              },
             },
           ],
         },
