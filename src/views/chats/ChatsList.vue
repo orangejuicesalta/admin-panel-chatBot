@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useChats } from "../../store/chats_store";
 
+const store = useChats();
 const search = ref("");
 const onSearch = () => {
   console.log(search.value);
 };
 </script>
+
 <template>
   <section
     class="h-full w-full border border-border-color rounded-l-[15px] bg-white"
@@ -26,7 +29,10 @@ const onSearch = () => {
     </div>
     <div class="w-full flex flex-col items-start justify-center">
       <router-link
-        :to="`/chats/list/${1}`"
+        v-for="(chat, idx) in store.chatsList"
+        :key="idx"
+        :to="`/chats/list/${chat.id}`"
+        @click="store.getChatMessages(chat.id)"
         class="w-full flex flex-row justify-between items-center px-[30px] py-5 border-b border-border-color"
       >
         <div class="flex flex-row items-center gap-2.5">
@@ -38,7 +44,9 @@ const onSearch = () => {
             alt="avatar"
           />
           <p class="flex flex-col gap-0.5">
-            <span class="text-sm font-normal">Марина</span>
+            <span class="text-sm font-normal">{{
+              chat.full_name ?? chat.username
+            }}</span>
             <span class="text-xs font-normal text-gray-label"
               >сообщение пользователя</span
             >

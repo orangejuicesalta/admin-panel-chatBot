@@ -1,12 +1,35 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, nextTick, onUpdated, watch } from "vue";
 import ChatBubbleBase from "../../components/base/ChatBubbleBase.vue";
-const message = ref("");
+import { useChats } from "../../store/chats_store";
+import { formatDate, getCurrentDate } from "../../composables/formatDate";
 
-const onSend = () => {
+const store = useChats();
+const chatWindow: any = ref(null);
+const message = ref("");
+const onSend = async (id: string) => {
+  await store.sendChatMessage(id, message.value);
+  await store.getChatMessages(id);
   message.value = "";
-  console.log("message sent");
 };
+
+watch(
+  () => store.chatMessages.length,
+  (newValue) => {}
+);
+
+onMounted(() => {
+  nextTick(() => {
+    if (chatWindow.value)
+      chatWindow.value.scrollTop = chatWindow.value.scrollHeight;
+  });
+});
+onUpdated(() => {
+  nextTick(() => {
+    if (chatWindow.value)
+      chatWindow.value.scrollTop = chatWindow.value.scrollHeight;
+  });
+});
 </script>
 
 <template>
@@ -23,10 +46,10 @@ const onSend = () => {
           alt="avatar"
         />
         <p class="flex flex-col gap-0.5">
-          <span class="text-sm font-normal">Марина</span>
-          <span class="text-xs font-normal text-gray-label"
+          <span class="text-sm font-normal">{{ store.chatMessages[0]?.chat.username }}</span>
+          <!-- <span class="text-xs font-normal text-gray-label"
             >48 пользователей</span
-          >
+          > -->
         </p>
       </div>
       <img
@@ -37,16 +60,39 @@ const onSend = () => {
         alt="icon"
       />
     </header>
-    <section class="h-full flex flex-col gap-2 overflow-y-auto py-2 pl-5 pr-2">
-      <ChatBubbleBase text="Hey, what's up?" />
-      <ChatBubbleBase text="dfdfdfdddddddd" isOwner />
+    <section
+      ref="chatWindow"
+      class="h-[600px] flex flex-col gap-2 overflow-y-auto py-2 pl-5 pr-2"
+    >
+      <div v-for="(chat, idx) in store.chatMessages" :key="idx">
+        <div
+          v-if="
+            formatDate(chat.date).date !==
+            formatDate(store.chatMessages[idx - 1]?.date).date
+          "
+          class="w-full text-center py-3 text-xs text-gray-700"
+        >
+          {{
+            getCurrentDate() === formatDate(chat?.date).date
+              ? "Сегодня"
+              : formatDate(chat?.date).date
+          }}
+        </div>
+        <ChatBubbleBase
+          :name="chat?.chat.username"
+          :text="chat?.text"
+          :dateTime="formatDate(chat?.date).time"
+          :isOwner="chat.user.id !== chat.chat.id"
+        />
+        <!-- <ChatBubbleBase text="dfdfdfdddddddd" isOwner /> -->
+      </div>
     </section>
     <div
       class="h-fit flex flex-row items-center gap-2 !rounded-br-[15px] !py-4 px-3 bg-white border border-border-color"
     >
       <a-input
         v-model:value="message"
-        @pressEnter="onSend()"
+        @pressEnter="onSend(store.chatMessages[0]?.chat.id)"
         placeholder="Сообщение"
         :bordered="false"
       >

@@ -1,5 +1,29 @@
 <script setup lang="ts">
 import SidebarBase from "../components/base/SidebarBase.vue";
+import { URL_WEBSOCKET } from "../api/api";
+import { useWebsocket } from "../store/websocket";
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
+
+let connection: any = null;
+const wsStore = useWebsocket();
+const route = useRoute();
+
+onMounted(() => {
+  connection = new WebSocket(URL_WEBSOCKET);
+  connection.onopen = function (event: any) {
+    console.log("Successfully connected to the echo websocket server...");
+  };
+  connection.onmessage = function (event: any) {
+    const data = JSON.parse(event.data);
+    console.log(JSON.parse(data)); //тут обьект
+    wsStore.manageMessage(JSON.parse(data), route.fullPath.includes("chats"));
+  };
+  connection.onclose = function (event: any) {
+    console.log("closed");
+    console.log("Websocket connection closed", event);
+  };
+});
 </script>
 
 <template>

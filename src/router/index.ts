@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       component: () => import("../layout/MainLayout.vue"),
       redirect: {
-        name: "chats-list",
+        path: "/auth",
       },
       children: [
         {
@@ -56,6 +56,10 @@ const router = createRouter({
           ],
         },
       ],
+    },
+    {
+      path: "/auth",
+      component: () => import("../views/Login.vue"),
     },
   ],
 });

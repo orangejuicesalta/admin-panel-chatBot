@@ -1,5 +1,13 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
+import { useUsers } from "../../store/users_store";
 import HeaderBase from "../../components/base/HeaderBase.vue";
+
+const store = useUsers();
+
+onMounted(() => {
+  store.getUsersList();
+});
 </script>
 
 <template>
@@ -8,7 +16,9 @@ import HeaderBase from "../../components/base/HeaderBase.vue";
     <section
       class="mt-6 flex flex-row justify-between items-center p-3 border border-[#DDE2E8] bg-white rounded-[10px]"
     >
-      <p class="text-sm font-normal">Количество пользователей: 20585</p>
+      <p class="text-sm font-normal">
+        Количество пользователей: {{ store.usersList.length }}
+      </p>
       <button
         class="bg-secondary-blue text-white rounded-[10px] py-2.5 px-3 text-sm font-normal"
       >

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useUsers } from "../../store/users_store";
 
 const search = ref("");
 const onSearch = () => {
   console.log(search.value);
 };
+const store = useUsers();
 </script>
 <template>
   <section
@@ -26,7 +28,10 @@ const onSearch = () => {
     </div>
     <div class="w-full flex flex-col items-start justify-center">
       <router-link
-        :to="`/messages/list/${1}`"
+        v-for="(user, idx) in store.usersList"
+        :key="idx"
+        :to="`/messages/list/${user.id}`"
+        @click="store.getUserMessages(user.id)"
         class="w-full flex flex-row justify-between items-center px-[30px] py-5 border-b border-border-color"
       >
         <div class="flex flex-row items-center gap-2.5">
@@ -38,7 +43,9 @@ const onSearch = () => {
             alt="avatar"
           />
           <p class="flex flex-col gap-0.5">
-            <span class="text-sm font-normal">Марина</span>
+            <span class="text-sm font-normal">{{
+              user.full_name ?? user.username
+            }}</span>
             <span class="text-xs font-normal text-gray-label"
               >сообщение пользователя</span
             >
