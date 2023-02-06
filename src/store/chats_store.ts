@@ -18,7 +18,6 @@ export const useChats = defineStore("chats", {
         this.chatsList.forEach((chat) => {
           this.chatMap?.set(chat.id, 0);
         });
-        console.log(data);
       } catch (e: any) {
         console.log(e);
       }
@@ -26,7 +25,6 @@ export const useChats = defineStore("chats", {
     async getChatMessages(id: string) {
       try {
         const data = await getChatMessages(id);
-        console.log(data.data);
         this.chatMessages = data.data.reverse();
         this.chatMap?.set(id, 0);
       } catch (e: any) {
@@ -35,8 +33,7 @@ export const useChats = defineStore("chats", {
     },
     async sendChatMessage(id: string, text: string) {
       try {
-        const data = await sendMessage(id, text);
-        console.log(data);
+        await sendMessage(id, text);
       } catch (e: any) {
         console.log(e);
       }

@@ -22,6 +22,9 @@ export const useWebsocket = defineStore("websocket", {
         if (usersStore.userMessages) {
           if (usersStore.userMessages[0].chat.id === message.chat.id) {
             usersStore.userMessages.push(message);
+          } else {
+            let newValue = usersStore.usersMap?.get(message.chat.id);
+            if (newValue) usersStore.usersMap?.set(message.chat.id, newValue++);
           }
         }
       }

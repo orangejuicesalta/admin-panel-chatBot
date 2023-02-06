@@ -46,16 +46,16 @@ const store = useUsers();
             <span class="text-sm font-normal">{{
               user.full_name ?? user.username
             }}</span>
-            <span class="text-xs font-normal text-gray-label"
+            <!-- <span class="text-xs font-normal text-gray-label"
               >сообщение пользователя</span
-            >
+            > -->
           </p>
         </div>
 
         <div
           class="w-5 h-5 bg-primary-orange text-white text-xs font-normal rounded-[30px] text-center pt-0.5"
         >
-          3
+          {{ store.usersMap?.get(user.id) }}
         </div>
       </router-link>
     </div>

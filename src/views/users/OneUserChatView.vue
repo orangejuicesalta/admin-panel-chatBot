@@ -3,10 +3,12 @@ import { ref, onMounted, nextTick, onUpdated, watch } from "vue";
 import ChatBubbleBase from "../../components/base/ChatBubbleBase.vue";
 import { useUsers } from "../../store/users_store";
 import { formatDate, getCurrentDate } from "../../composables/formatDate";
+import { useRoute } from "vue-router";
 
 const chatWindow: any = ref(null);
 const message = ref("");
 const store = useUsers();
+const route = useRoute();
 
 const onSend = async (id: string) => {
   await store.sendChatMessage(id, message.value);
@@ -25,7 +27,14 @@ onMounted(() => {
       chatWindow.value.scrollTop = chatWindow.value.scrollHeight;
   });
 });
-onUpdated(() => {
+onUpdated(async () => {
+  let id: string;
+  if (Array.isArray(route.params.id)) {
+    id = route.params.id[0];
+  } else {
+    id = route.params.id;
+  }
+  await store.getUserMessages(id);
   nextTick(() => {
     if (chatWindow.value)
       chatWindow.value.scrollTop = chatWindow.value.scrollHeight;
@@ -50,9 +59,6 @@ onUpdated(() => {
           <span class="text-sm font-normal">{{
             store.userMessages[0]?.chat?.username
           }}</span>
-          <!-- <span class="text-xs font-normal text-gray-label"
-            >48 пользователей</span
-          > -->
         </p>
       </div>
       <img
@@ -68,6 +74,19 @@ onUpdated(() => {
       class="h-[500px] flex flex-col gap-2 overflow-y-auto py-2 pl-5 pr-2"
     >
       <div v-for="(message, idx) in store.userMessages" :key="idx">
+        <div
+          v-if="
+            formatDate(message.date).date !==
+            formatDate(store.userMessages[idx - 1]?.date).date
+          "
+          class="w-full text-center py-3 text-xs text-gray-700"
+        >
+          {{
+            getCurrentDate() === formatDate(message?.date).date
+              ? "Сегодня"
+              : formatDate(message?.date).date
+          }}
+        </div>
         <ChatBubbleBase
           :name="message?.chat.username"
           :text="message?.text"
@@ -75,7 +94,6 @@ onUpdated(() => {
           :isOwner="message.chat.id !== message.user.id"
           :showAva="message.user.id !== store.userMessages[idx - 1]?.user.id"
         />
-        <!-- <ChatBubbleBase text="dfdfdfdddddddd" isOwner /> -->
       </div>
     </section>
     <div

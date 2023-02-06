@@ -46,10 +46,10 @@ onUpdated(() => {
           alt="avatar"
         />
         <p class="flex flex-col gap-0.5">
-          <span class="text-sm font-normal">{{ store.chatMessages[0]?.chat.username }}</span>
-          <!-- <span class="text-xs font-normal text-gray-label"
-            >48 пользователей</span
-          > -->
+          <span class="text-sm font-normal">{{
+            store.chatMessages[0]?.chat.username
+          }}</span>
+         
         </p>
       </div>
       <img
@@ -84,7 +84,6 @@ onUpdated(() => {
           :dateTime="formatDate(chat?.date).time"
           :isOwner="chat.user.id !== chat.chat.id"
         />
-        <!-- <ChatBubbleBase text="dfdfdfdddddddd" isOwner /> -->
       </div>
     </section>
     <div
