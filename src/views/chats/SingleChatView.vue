@@ -33,11 +33,11 @@ onUpdated(() => {
 </script>
 
 <template>
-  <main class="w-full flex flex-col h-full">
+  <main class="w-full flex flex-col h-[750px]">
     <header
       class="bg-white h-fit flex flex-row justify-between items-center px-4 py-4 border border-border-color rounded-r-[15px]"
     >
-      <div class="flex flex-row items-center gap-2.5">
+      <div class="h-full flex flex-row items-center gap-2.5">
         <img
           src="../../assets/logo.svg"
           width="36"
@@ -49,7 +49,6 @@ onUpdated(() => {
           <span class="text-sm font-normal">{{
             store.chatMessages[0]?.chat.username
           }}</span>
-         
         </p>
       </div>
       <img
@@ -62,7 +61,7 @@ onUpdated(() => {
     </header>
     <section
       ref="chatWindow"
-      class="h-[600px] flex flex-col gap-2 overflow-y-auto py-2 pl-5 pr-2"
+      class="h-full flex flex-col gap-1 overflow-y-auto py-2 pl-5 pr-2"
     >
       <div v-for="(chat, idx) in store.chatMessages" :key="idx">
         <div

@@ -26,7 +26,7 @@ onMounted(() => {
       </button>
     </section>
 
-    <section class="h-full w-full grid grid-cols-even-cols mt-2">
+    <section class="h-[650px] w-full grid grid-cols-even-cols mt-2">
       <div>
         <router-view name="left" />
       </div>

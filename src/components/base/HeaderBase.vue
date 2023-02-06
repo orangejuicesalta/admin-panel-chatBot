@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { onBeforeMount } from "vue";
 import router from "../../router";
-import {useAuthStore} from '../../store/authorization';
+import { useAuthStore } from "../../store/authorization";
 import { storeToRefs } from "pinia";
 
-const {userName} = storeToRefs(useAuthStore());
+const { userName } = storeToRefs(useAuthStore());
 defineProps({
   header: String,
 });
@@ -13,7 +13,9 @@ function onLogout() {
   localStorage.clear();
   router.push("/auth");
 }
-
+onBeforeMount(() => {
+  userName.value = localStorage.getItem("username") ?? "";
+});
 </script>
 
 <template>

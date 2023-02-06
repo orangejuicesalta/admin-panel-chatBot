@@ -28,13 +28,13 @@ onMounted(() => {
   });
 });
 onUpdated(async () => {
-  let id: string;
-  if (Array.isArray(route.params.id)) {
-    id = route.params.id[0];
-  } else {
-    id = route.params.id;
-  }
-  await store.getUserMessages(id);
+  // let id: string;
+  // if (Array.isArray(route.params.id)) {
+  //   id = route.params.id[0];
+  // } else {
+  //   id = route.params.id;
+  // }
+  // await store.getUserMessages(id);
   nextTick(() => {
     if (chatWindow.value)
       chatWindow.value.scrollTop = chatWindow.value.scrollHeight;
@@ -43,11 +43,11 @@ onUpdated(async () => {
 </script>
 
 <template>
-  <main class="w-full flex flex-col h-full">
+  <main class="w-full flex flex-col h-[650px]">
     <header
       class="bg-white h-fit flex flex-row justify-between items-center px-4 py-4 border border-border-color rounded-r-[15px]"
     >
-      <div class="flex flex-row items-center gap-2.5">
+      <div class="h-full flex flex-row items-center gap-2.5">
         <img
           src="../../assets/logo.svg"
           width="36"
@@ -71,7 +71,7 @@ onUpdated(async () => {
     </header>
     <section
       ref="chatWindow"
-      class="h-[500px] flex flex-col gap-2 overflow-y-auto py-2 pl-5 pr-2"
+      class="h-full flex flex-col gap-1 overflow-y-auto py-2 pl-5 pr-2"
     >
       <div v-for="(message, idx) in store.userMessages" :key="idx">
         <div

@@ -15,7 +15,6 @@ const icon = ref(closedEyeIcon);
 
 const onClick = () => {
   store.login(user.username, user.password);
-  console.log(user);
 };
 const onRegister = () => {
   store.register(user.username, user.password);

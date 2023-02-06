@@ -5,7 +5,7 @@ export const getChats = () => {
 };
 
 export const getChatMessages = (id: string) => {
-  return api.get(`/telegram/mybot/messages/${id}?limit=100&offset=0`);
+  return api.get(`/telegram/mybot/messages/${id}?limit=200&offset=0`);
 };
 
 export const sendMessage = (id: string, text: string) => {

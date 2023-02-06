@@ -2,7 +2,7 @@ import axios from "axios";
 import type { InternalAxiosRequestConfig } from "axios";
 import type { AxiosResponse } from "axios";
 import { useAuthStore } from "../store/authorization";
-import { useRouter } from "vue-router";
+import router from "../router/index";
 
 const URL_MAIN = "https://vm4200374.25ssd.had.wf";
 export const URL_WEBSOCKET = "wss://vm4200374.25ssd.had.wf/messages/ws";
@@ -39,7 +39,6 @@ api.interceptors.response.use(
   },
   async function (error) {
     if (error?.response?.status === 401) {
-      const router = useRouter();
       router.push("/auth");
       return Promise.reject(error);
     }

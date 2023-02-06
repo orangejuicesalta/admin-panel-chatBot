@@ -3,9 +3,7 @@ import { ref, onMounted } from "vue";
 import { useUsers } from "../../store/users_store";
 
 const search = ref("");
-const onSearch = () => {
-  console.log(search.value);
-};
+const onSearch = () => {};
 const store = useUsers();
 </script>
 <template>
@@ -53,10 +51,7 @@ const store = useUsers();
         </div>
 
         <div
-          v-if="
-            store.usersMap?.get(user.id) !== 0 ||
-            store.usersMap?.get(user.id) !== undefined
-          "
+          v-if="store.usersMap?.get(user.id) !== 0"
           class="w-5 h-5 bg-primary-orange text-white text-xs font-normal rounded-[30px] text-center pt-0.5"
         >
           {{ store.usersMap?.get(user.id) }}

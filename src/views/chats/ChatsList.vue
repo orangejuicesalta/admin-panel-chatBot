@@ -5,7 +5,6 @@ import { useChats } from "../../store/chats_store";
 const store = useChats();
 const search = ref("");
 const onSearch = () => {
-  console.log(search.value);
 };
 </script>
 
@@ -55,8 +54,7 @@ const onSearch = () => {
 
         <div
           v-if="
-            store.chatMap?.get(chat.id) !== 0 ||
-            store.chatMap?.get(chat.id) !== undefined
+            store.chatMap?.get(chat.id) !== 0
           "
           class="w-5 h-5 bg-primary-orange text-white text-xs font-normal rounded-[30px] text-center pt-0.5"
         >

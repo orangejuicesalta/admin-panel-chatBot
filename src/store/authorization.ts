@@ -6,7 +6,7 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     error: false,
     loading: false,
-    userName: localStorage.getItem("username") ?? "",
+    userName: localStorage.getItem("username") || "",
   }),
   actions: {
     async login(userName: string, password: string) {
@@ -14,7 +14,6 @@ export const useAuthStore = defineStore("auth", {
       this.loading = true;
       try {
         const data = await loginUser(userName, password);
-        console.log(data);
         this.setAccessToken(data.data.access_token);
         router.push("/chats/list");
       } catch (e: any) {
@@ -29,7 +28,7 @@ export const useAuthStore = defineStore("auth", {
       this.loading = true;
       try {
         const data = await registerUser(userName, password);
-        console.log(data);
+        this.setAccessToken(data.data.access_token);
         router.push("/chats/list");
       } catch (e: any) {
         this.error = true;
@@ -47,9 +46,9 @@ export const useAuthStore = defineStore("auth", {
     async getMyProfile() {
       try {
         const data = await getMe();
-        console.log(data.data);
         if (!localStorage.getItem("username")) {
           localStorage.setItem("username", data?.data.username);
+          this.userName = data?.data.username;
           localStorage.setItem("my_id", data.data.id);
         }
       } catch (e: any) {

@@ -15,7 +15,10 @@ export const useWebsocket = defineStore("websocket", {
             chatsStore.chatMessages.push(message);
           } else {
             let newValue = chatsStore.chatMap?.get(message.chat.id);
-            if (newValue) chatsStore.chatMap?.set(message.chat.id, newValue++);
+            if (newValue != null) {
+              newValue++;
+              chatsStore.chatMap?.set(message.chat.id, newValue);
+            }
           }
         }
       } else {
@@ -24,7 +27,10 @@ export const useWebsocket = defineStore("websocket", {
             usersStore.userMessages.push(message);
           } else {
             let newValue = usersStore.usersMap?.get(message.chat.id);
-            if (newValue) usersStore.usersMap?.set(message.chat.id, newValue++);
+            if (newValue != null) {
+              newValue++;
+              usersStore.usersMap?.set(message.chat.id, newValue);
+            }
           }
         }
       }

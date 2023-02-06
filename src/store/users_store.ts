@@ -15,6 +15,8 @@ export const useUsers = defineStore("users", {
       try {
         const data = await getUsers();
         this.usersList = data.data;
+        this.usersMap = new Map<string, number>();
+
         this.usersList.forEach((chat) => {
           this.usersMap?.set(chat.id, 0);
         });

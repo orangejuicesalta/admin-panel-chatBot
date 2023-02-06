@@ -15,7 +15,7 @@ onMounted(() => {
 <template>
   <main class="h-full flex flex-col">
     <HeaderBase header="Чаты" />
-    <section class="h-full w-full grid grid-cols-even-cols mt-5">
+    <section class="h-[750px] w-full grid grid-cols-even-cols mt-5">
       <div>
         <router-view name="left" />
       </div>

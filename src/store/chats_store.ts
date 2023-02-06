@@ -8,13 +8,14 @@ export const useChats = defineStore("chats", {
     loading: false,
     chatsList: [] as IChat[],
     chatMessages: [] as IMessages[],
-    chatMap: {} as Map<string, number> | null,
+    chatMap: {} as Map<string, number>,
   }),
   actions: {
     async getChatsList() {
       try {
         const data = await getChats();
         this.chatsList = data.data;
+        this.chatMap = new Map<string, number>()
         this.chatsList.forEach((chat) => {
           this.chatMap?.set(chat.id, 0);
         });
@@ -26,7 +27,7 @@ export const useChats = defineStore("chats", {
       try {
         const data = await getChatMessages(id);
         this.chatMessages = data.data.reverse();
-        this.chatMap?.set(id, 0);
+        this.chatMap.set(id, 0);
       } catch (e: any) {
         console.log(e);
       }

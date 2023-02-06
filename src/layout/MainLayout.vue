@@ -16,12 +16,10 @@ onMounted(() => {
   };
   connection.onmessage = function (event: any) {
     const data = JSON.parse(event.data);
-    console.log(JSON.parse(data)); //тут обьект
     wsStore.manageMessage(JSON.parse(data), route.fullPath.includes("chats"));
   };
   connection.onclose = function (event: any) {
-    console.log("closed");
-    console.log("Websocket connection closed", event);
+    console.log("Websocket connection closed");
   };
 });
 </script>
